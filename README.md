@@ -2,10 +2,6 @@
 
 HW 11: JavaScript API Cards
 
-## NOTES TO Prof. Atkin
-
-I am trying to turn this into a bracket system elimination thingy like a march madness for memes, but it is turning out to be pretty tough. Hopefully, by the time I get this turned in, I have it working. If not, it should be at least storing memes as favorites.
-
 ## Why is it important that we only make one API call for this page?
 
 We can easily store the objects of the entire API call in a datatype(list/object) in one call. Doing several different calls is bad for the owner of the API as it costs them money and memory every call. Most of these APIs have allowed us the grace of using these for free, so we must be as efficient/respectful as possible.
