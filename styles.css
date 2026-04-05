@@ -10,11 +10,31 @@ body {
   position: relative;
   height: 100vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+
   gap: 1em;
 
   background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+}
+
+.favorites-div,
+.selection {
+  display: flex;
+  justify-content: center;
+  height: 50%;
+  width: 100vw;
+  gap: 1em;
+}
+
+.favorites-div {
+  align-items: end;
+  padding: 1%;
+}
+
+.selection {
+  align-items: start;
 }
 
 .title {
@@ -36,10 +56,20 @@ h2 {
   top: 1%;
 }
 
+.like {
+  background-color: pink;
+  color: whitesmoke;
+  right: 0%;
+}
+
+.like:hover {
+  background-color: hotpink;
+}
+
 .card {
   position: relative;
   background-color: whitesmoke;
-  width: 40%;
+  width: 25%;
   min-width: 250px;
   height: 75%;
 
@@ -83,5 +113,7 @@ button {
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
+  padding: 1px;
+  margin: 1px;
 }
