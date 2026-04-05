@@ -31,6 +31,7 @@ body {
 .favorites-div {
   align-items: end;
   padding: 1%;
+  flex-wrap: wrap;
 }
 
 .selection {
