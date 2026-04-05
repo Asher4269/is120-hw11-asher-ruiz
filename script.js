@@ -15,6 +15,8 @@ let favorites_div = document.querySelector(".favorites-div");
 
 let memes_obj = {};
 
+let favorite_memes = JSON.parse(localStorage.getItem("favorite_memes")) || [];
+
 async function get() {
   let response = await fetch("https://api.imgflip.com/get_memes");
   let data = await response.json();
@@ -44,6 +46,7 @@ async function main() {
   }
 
   play_bracket();
+  render_favorites();
 }
 
 function play_bracket() {
@@ -59,12 +62,12 @@ function play_bracket() {
     index2 = Math.floor(Math.random() * keys.length);
   }
 
-  createCard(card1, memes_obj[index1]); // normal card
-  createCard(card2, memes_obj[index2]); // normal card
+  createCard(card1, memes_obj[index1]);
+  createCard(card2, memes_obj[index2]);
 }
 
 function createCard(card, meme, isFavorite = false) {
-  card.innerHTML = ""; // clear just in case
+  card.innerHTML = "";
 
   let img = document.createElement("img");
   let title = document.createElement("h2");
@@ -79,11 +82,9 @@ function createCard(card, meme, isFavorite = false) {
 
   if (!isFavorite) {
     let favorite_add = document.createElement("button");
-
     favorite_add.textContent = "LIKE";
     favorite_add.classList.add("like");
 
-    // Had to ask chat how to do this part, as I didn't know how to use arguments in an event listener such as "meme" here, would love to learn more about that
     favorite_add.onclick = () => {
       add_favorite(meme);
     };
@@ -93,24 +94,30 @@ function createCard(card, meme, isFavorite = false) {
 }
 
 function add_favorite(meme) {
-  let existing = document.querySelectorAll(".favorites-div img");
+  favorite_memes.push(meme);
+  localStorage.setItem("favorite_memes", JSON.stringify(favorite_memes));
 
-  for (let img of existing) {
-    if (img.src === meme.url) return;
-  }
+  render_favorites();
+}
 
-  let new_card = document.createElement("div");
-  new_card.classList.add("card");
+function render_favorites() {
+  favorites_div.innerHTML = "";
 
-  createCard(new_card, meme, true);
+  favorite_memes.forEach((meme) => {
+    let new_card = document.createElement("div");
+    new_card.classList.add("card");
 
-  favorites_div.appendChild(new_card);
+    createCard(new_card, meme, true);
+    favorites_div.appendChild(new_card);
+  });
+
   check_favorites_div();
 }
 
 function clear_favorites() {
-  favorites_div.innerHTML = "";
-  check_favorites_div();
+  favorite_memes = [];
+  localStorage.removeItem("favorite_memes");
+  render_favorites();
 }
 
 function check_favorites_div() {
@@ -119,20 +126,18 @@ function check_favorites_div() {
   if (favorites.length === 0) {
     favorites_div.style.display = "none";
     favorite_title.style.display = "none";
-
     delete_favorites.style.opacity = "0";
     delete_favorites.style.pointerEvents = "none";
   } else {
     favorites_div.style.display = "flex";
     favorite_title.style.display = "block";
-    favorite_title.textContent = "Favorites";
-
     delete_favorites.style.opacity = "1";
     delete_favorites.style.pointerEvents = "auto";
   }
 }
 
 check_favorites_div();
+render_favorites();
 
 api_caller.addEventListener("click", get);
 play_button.addEventListener("click", main);

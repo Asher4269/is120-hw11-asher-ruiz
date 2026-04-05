@@ -25,3 +25,7 @@ I believe there would be a Key Error since the favorite list tries to call the f
 ## How could you fix that?
 
 Maybe before calling the referenced items, there could be a check function that simply returns True or False based on if a certain key exists.
+
+## AI - Use
+
+Chat helped me with some debugging and the logistics of saving favorites to local storage and the concept of rendering those on-load.
